@@ -79,5 +79,6 @@ namespace ClicksAndKeysCounter
 
             return 0;
         }
+
     }
 }

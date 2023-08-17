@@ -82,9 +82,11 @@
             Controls.Add(lbRightClickCount);
             Controls.Add(lbLeftClickCount);
             Controls.Add(btnToggle);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
             Name = "FPrincipal";
-            Text = "ClicksAndKeysCounter";
+            StartPosition = FormStartPosition.CenterScreen;
             FormClosing += FPrincipal_FormClosing;
             Load += FPrincipal_Load;
             Resize += FPrincipal_Resize;

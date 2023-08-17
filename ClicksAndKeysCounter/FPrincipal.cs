@@ -1,4 +1,6 @@
 
+using System.Windows.Forms;
+
 namespace ClicksAndKeysCounter
 {
     public partial class FPrincipal : Form
@@ -54,12 +56,29 @@ namespace ClicksAndKeysCounter
                 UpdateClickCountLabel("L");
             }
         }
+
         private void MouseHook_RightButtonDown(object sender, EventArgs e)
         {
             if (counting)
             {
                 rightButtonClickCount++;
                 UpdateClickCountLabel("R");
+            }
+        }
+
+        private void MouseHook_PositionButtonDown(object sender, EventArgs e)
+        {
+            if (counting)
+            {
+                if (sender != null)
+                {
+                    try
+                    {
+                        var point = (MouseHook.POINT)sender;
+                        RegistraLog.LogDetalhado($"Mouse clicked at X: {point.x}, Y: {point.y}");
+                    }
+                    catch { }
+                }
             }
         }
 
@@ -70,6 +89,7 @@ namespace ClicksAndKeysCounter
 
             MouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
             MouseHook.RightButtonDown += MouseHook_RightButtonDown;
+            MouseHook.PositionButtonDown += MouseHook_PositionButtonDown;
 
             btnToggle_Click(null, null); // Inicia a contagem ao carregar o formulário (opcional)
         }
@@ -78,7 +98,7 @@ namespace ClicksAndKeysCounter
         {
             MouseHook.Stop();
         }
-
+    
         private void FPrincipal_Resize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized)
@@ -92,5 +112,6 @@ namespace ClicksAndKeysCounter
             Show(); // Exibe o formulário quando o ícone na bandeja é clicado duas vezes
             WindowState = FormWindowState.Normal;
         }
+
     }
 }

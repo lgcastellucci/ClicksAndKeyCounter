@@ -9,6 +9,23 @@ namespace ClicksAndKeysCounter
 
         public static event EventHandler LeftButtonDown;
         public static event EventHandler RightButtonDown;
+        public static event EventHandler PositionButtonDown;
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int x;
+            public int y;
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        private struct MSLLHOOKSTRUCT
+        {
+            public POINT pt;
+            public uint mouseData;
+            public uint flags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
 
         public static void Start()
         {
@@ -23,9 +40,11 @@ namespace ClicksAndKeysCounter
         private static IntPtr SetHook(Win32.LowLevelMouseProc proc)
         {
             using (var curProcess = System.Diagnostics.Process.GetCurrentProcess())
-            using (var curModule = curProcess.MainModule)
             {
-                return Win32.SetWindowsHookEx(Win32.WH_MOUSE_LL, proc, Win32.GetModuleHandle(curModule.ModuleName), 0);
+                using (var curModule = curProcess.MainModule)
+                {
+                    return Win32.SetWindowsHookEx(Win32.WH_MOUSE_LL, proc, Win32.GetModuleHandle(curModule.ModuleName), 0);
+                }
             }
         }
 
@@ -39,6 +58,18 @@ namespace ClicksAndKeysCounter
             {
                 RightButtonDown?.Invoke(null, EventArgs.Empty);
             }
+
+            if (nCode >= 0 && ((wParam == (IntPtr)Win32.WM_LBUTTONDOWN) || (wParam == (IntPtr)Win32.WM_RBUTTONDOWN)))
+            {
+                try
+                {
+                    var hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+                    var point = hookStruct.pt;
+                    PositionButtonDown?.Invoke(point, EventArgs.Empty);
+                }
+                catch { }
+            }
+
             return Win32.CallNextHookEx(hookId, nCode, wParam, lParam);
         }
 
@@ -63,5 +94,6 @@ namespace ClicksAndKeysCounter
             [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             public static extern IntPtr GetModuleHandle(string lpModuleName);
         }
+
     }
 }
