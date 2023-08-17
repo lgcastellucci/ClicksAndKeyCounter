@@ -3,60 +3,81 @@ namespace ClicksAndKeysCounter
 {
     internal class RegistraLog
     {
+        private static string GetFilePath()
+        {
+            string caminhoArquivo = AppContext.BaseDirectory;
+
+            caminhoArquivo = Path.Combine(caminhoArquivo, "log");
+            if (!Directory.Exists(caminhoArquivo))
+                Directory.CreateDirectory(caminhoArquivo);
+
+            caminhoArquivo = Path.Combine(caminhoArquivo, "ArquivoLog_" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+            if (!File.Exists(caminhoArquivo))
+            {
+                FileStream arquivo = File.Create(caminhoArquivo);
+                arquivo.Close();
+            }
+
+            return caminhoArquivo;
+        }
+
         public static bool LogDetalhado(string strMensagem)
         {
-            Console.WriteLine($"{DateTime.Now:HH:mm:ss} => {strMensagem}");
-
-            string erro = "";
-
             try
             {
-                string caminhoArquivo = AppContext.BaseDirectory;
-                erro = "1";
-
-                caminhoArquivo = Path.Combine(caminhoArquivo, "log");
-                if (!Directory.Exists(caminhoArquivo))
+                string filePath = GetFilePath();
+                using (StreamWriter w = File.AppendText(filePath))
                 {
-                    Directory.CreateDirectory(caminhoArquivo);
-                }
-
-                caminhoArquivo = Path.Combine(caminhoArquivo, "ArquivoLog_" + DateTime.Now.ToString("yyyyMMdd") + ".txt");
-                erro = "2";
-
-                if (!File.Exists(caminhoArquivo))
-                {
-                    FileStream arquivo = File.Create(caminhoArquivo);
-                    erro = "3";
-
-                    arquivo.Close();
-                    erro = "4";
-                }
-
-                using (StreamWriter w = File.AppendText(caminhoArquivo))
-                {
-                    erro = "5";
                     try
                     {
                         w.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")} => {strMensagem}");
-                        erro = "6";
+                        w.Close();
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        Console.WriteLine("erro " + erro);
-
-                        Console.WriteLine(ex);
                         return false;
                     }
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine("erro " + erro);
-                Console.WriteLine(ex);
-
                 return false;
             }
+        }
+
+        public static int GetLastCountLeftClicks()
+        {
+            string filePath = GetFilePath();
+            string[] lines = File.ReadAllLines(filePath);
+
+            for (int i = lines.Length - 1; i >= 0; i--)
+            {
+                if (lines[i].Contains("Left Button Clicks: "))
+                {
+                    string[] line = lines[i].Split(':');
+                    return Convert.ToInt32(line[line.Length-1].Trim());
+                }
+            }
+
+            return 0;
+        }
+
+        public static int GetLastCountRightClicks()
+        {
+            string filePath = GetFilePath();
+            string[] lines = File.ReadAllLines(filePath);
+
+            for (int i = lines.Length - 1; i >= 0; i--)
+            {
+                if (lines[i].Contains("Right Button Clicks: "))
+                {
+                    string[] line = lines[i].Split(':');
+                    return Convert.ToInt32(line[line.Length - 1].Trim());
+                }
+            }
+
+            return 0;
         }
     }
 }

@@ -65,6 +65,9 @@ namespace ClicksAndKeysCounter
 
         private void FPrincipal_Load(object sender, EventArgs e)
         {
+            leftButtonClickCount = RegistraLog.GetLastCountLeftClicks();
+            rightButtonClickCount = RegistraLog.GetLastCountRightClicks();
+
             MouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
             MouseHook.RightButtonDown += MouseHook_RightButtonDown;
 
