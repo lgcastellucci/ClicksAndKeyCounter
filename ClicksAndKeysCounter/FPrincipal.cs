@@ -1,6 +1,4 @@
 
-using System.Windows.Forms;
-
 namespace ClicksAndKeysCounter
 {
     public partial class FPrincipal : Form
@@ -76,6 +74,7 @@ namespace ClicksAndKeysCounter
                     {
                         var point = (MouseHook.POINT)sender;
                         RegistraLog.LogDetalhado($"Mouse clicked at X: {point.x}, Y: {point.y}");
+                        SaveImage.UpdateImage(point.x, point.y);
                     }
                     catch { }
                 }
@@ -98,7 +97,7 @@ namespace ClicksAndKeysCounter
         {
             MouseHook.Stop();
         }
-    
+
         private void FPrincipal_Resize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized)
