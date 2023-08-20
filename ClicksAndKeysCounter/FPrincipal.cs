@@ -9,6 +9,8 @@ namespace ClicksAndKeysCounter
 
         private bool counting = false; // Variável para indicar se a contagem está em andamento
 
+        private DateTime today = DateTime.Now.Date; // Variável para obter a data atual
+
         public FPrincipal()
         {
             InitializeComponent();
@@ -16,55 +18,86 @@ namespace ClicksAndKeysCounter
 
         private void btnToggle_Click(object sender, EventArgs e)
         {
-            if (!counting)
-            {
-                counting = true;
-                btnToggle.Text = "Parar";
-                MouseHook.Start(); // Inicia o monitoramento de cliques
-                KeyboardHook.Start(); // Inicia o monitoramento de teclas
-            }
-            else
+            ChangeCounting();
+        }
+
+        private void ChangeCounting()
+        {
+            if (counting)
             {
                 counting = false;
-                btnToggle.Text = "Iniciar";
+                btnToggle.Text = "Start";
                 MouseHook.Stop(); // Para o monitoramento de cliques
                 KeyboardHook.Stop(); // Para o monitoramento de cliques
             }
+            else
+            {
+                counting = true;
+                btnToggle.Text = "Stop";
+                MouseHook.Start(); // Inicia o monitoramento de cliques
+                KeyboardHook.Start(); // Inicia o monitoramento de teclas
+            }
         }
 
-        private void UpdateClickCountLabel(string button)
+        private void UpdateCountLabel(string button)
         {
-            lbLeftClickCount.Text = $"Left Button Clicks: {leftButtonClickCount}";
-            lbRightClickCount.Text = $"Right Button Clicks: {rightButtonClickCount}";
+            lbLeftClickCount.Text = RegistraLog.messageLeftButtonClick + " : " + leftButtonClickCount.ToString();
+            lbRightClickCount.Text = RegistraLog.messageRightButtonClick + " : " + rightButtonClickCount.ToString();
+            lbKeyPressCount.Text = RegistraLog.messageKeyPress + " : " + keyPressCount.ToString();
 
             if (button == "L")
-                RegistraLog.LogDetalhado($"Left Button Clicks: {leftButtonClickCount}");
+                RegistraLog.RegisterSetCount(button, leftButtonClickCount);
             if (button == "R")
-                RegistraLog.LogDetalhado($"Right Button Clicks: {rightButtonClickCount}");
+                RegistraLog.RegisterSetCount(button, rightButtonClickCount);
+            if (button == "K")
+                RegistraLog.RegisterSetCount(button, keyPressCount);
 
             UpdateNotifyIconText(); // Atualize o texto do ícone na bandeja do sistema
         }
 
         private void UpdateNotifyIconText()
         {
-            notifyIcon1.Text = $"Cliques: {leftButtonClickCount + rightButtonClickCount}";
+            notifyIconMain.Text = $"Cliques: {leftButtonClickCount + rightButtonClickCount}";
+        }
+
+        private void ClearCounts()
+        {
+            leftButtonClickCount = 0;
+            rightButtonClickCount = 0;
+            keyPressCount = 0;
+
+            UpdateCountLabel("L");
+            UpdateCountLabel("R");
+            UpdateCountLabel("K");
         }
 
         private void MouseHook_LeftButtonDown(object sender, EventArgs e)
         {
+            if (today != DateTime.Now.Date)
+            {
+                ClearCounts();
+                today = DateTime.Now.Date;
+            }
+
             if (counting)
             {
                 leftButtonClickCount++;
-                UpdateClickCountLabel("L");
+                UpdateCountLabel("L");
             }
         }
 
         private void MouseHook_RightButtonDown(object sender, EventArgs e)
         {
+            if (today != DateTime.Now.Date)
+            {
+                ClearCounts();
+                today = DateTime.Now.Date;
+            }
+
             if (counting)
             {
                 rightButtonClickCount++;
-                UpdateClickCountLabel("R");
+                UpdateCountLabel("R");
             }
         }
 
@@ -87,23 +120,25 @@ namespace ClicksAndKeysCounter
 
         private void KeyboardHook_KeyDown(object sender, EventArgs e)
         {
+            if (today != DateTime.Now.Date)
+            {
+                ClearCounts();
+                today = DateTime.Now.Date;
+            }
+
             if (counting)
             {
                 keyPressCount++;
-                UpdatKeyCountLabel();
+                UpdateCountLabel("K");
             }
-        }
-
-        private void UpdatKeyCountLabel()
-        {
-            lbKeyPressCount.Text = $"Keys Pressed: {keyPressCount}";
-            RegistraLog.LogDetalhado($"Keys Pressed: {keyPressCount}");
         }
 
         private void FPrincipal_Load(object sender, EventArgs e)
         {
-            leftButtonClickCount = RegistraLog.GetLastCountLeftClicks();
-            rightButtonClickCount = RegistraLog.GetLastCountRightClicks();
+            leftButtonClickCount = RegistraLog.GetLastCount("L");
+            rightButtonClickCount = RegistraLog.GetLastCount("R");
+            keyPressCount = RegistraLog.GetLastCount("K");
+            UpdateCountLabel("");
 
             MouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
             MouseHook.RightButtonDown += MouseHook_RightButtonDown;
@@ -111,7 +146,8 @@ namespace ClicksAndKeysCounter
 
             KeyboardHook.KeyDown += KeyboardHook_KeyDown;
 
-            btnToggle_Click(null, null); // Inicia a contagem ao carregar o formulário (opcional)
+            //the status create false, now change to true to start the counting
+            ChangeCounting();
         }
 
         private void FPrincipal_FormClosing(object sender, FormClosingEventArgs e)
@@ -127,7 +163,7 @@ namespace ClicksAndKeysCounter
             }
         }
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIconMain_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Show(); // Exibe o formulário quando o ícone na bandeja é clicado duas vezes
             WindowState = FormWindowState.Normal;

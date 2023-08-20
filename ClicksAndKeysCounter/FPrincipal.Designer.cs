@@ -33,7 +33,7 @@
             btnToggle = new Button();
             lbLeftClickCount = new Label();
             lbRightClickCount = new Label();
-            notifyIcon1 = new NotifyIcon(components);
+            notifyIconMain = new NotifyIcon(components);
             lbKeyPressCount = new Label();
             SuspendLayout();
             // 
@@ -68,12 +68,12 @@
             lbRightClickCount.Text = "lbRightClickCount";
             lbRightClickCount.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // notifyIcon1
+            // notifyIconMain
             // 
-            notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
-            notifyIcon1.Text = "notifyIcon1";
-            notifyIcon1.Visible = true;
-            notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
+            notifyIconMain.Icon = (Icon)resources.GetObject("notifyIconMain.Icon");
+            notifyIconMain.Text = "notifyIconMain";
+            notifyIconMain.Visible = true;
+            notifyIconMain.MouseDoubleClick += NotifyIconMain_MouseDoubleClick;
             // 
             // lbKeyPressCount
             // 
@@ -110,7 +110,7 @@
         private Button btnToggle;
         private Label lbLeftClickCount;
         private Label lbRightClickCount;
-        private NotifyIcon notifyIcon1;
+        private NotifyIcon notifyIconMain;
         private Label lbKeyPressCount;
     }
 }
