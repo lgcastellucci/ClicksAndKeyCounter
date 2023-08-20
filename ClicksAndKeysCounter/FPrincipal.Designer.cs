@@ -34,6 +34,7 @@
             lbLeftClickCount = new Label();
             lbRightClickCount = new Label();
             notifyIcon1 = new NotifyIcon(components);
+            lbKeyPressCount = new Label();
             SuspendLayout();
             // 
             // btnToggle
@@ -74,11 +75,22 @@
             notifyIcon1.Visible = true;
             notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
+            // lbKeyPressCount
+            // 
+            lbKeyPressCount.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            lbKeyPressCount.Location = new Point(12, 110);
+            lbKeyPressCount.Name = "lbKeyPressCount";
+            lbKeyPressCount.Size = new Size(228, 19);
+            lbKeyPressCount.TabIndex = 3;
+            lbKeyPressCount.Text = "lbKeyPressCount";
+            lbKeyPressCount.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // FPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(253, 113);
+            ClientSize = new Size(253, 136);
+            Controls.Add(lbKeyPressCount);
             Controls.Add(lbRightClickCount);
             Controls.Add(lbLeftClickCount);
             Controls.Add(btnToggle);
@@ -99,5 +111,6 @@
         private Label lbLeftClickCount;
         private Label lbRightClickCount;
         private NotifyIcon notifyIcon1;
+        private Label lbKeyPressCount;
     }
 }

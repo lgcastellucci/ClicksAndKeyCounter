@@ -5,6 +5,8 @@ namespace ClicksAndKeysCounter
     {
         private int leftButtonClickCount = 0; // Variável para contar os cliques do botão esquerdo
         private int rightButtonClickCount = 0; // Variável para contar os cliques do botão direito
+        private int keyPressCount = 0; // Variável para contar as teclas pressionadas
+
         private bool counting = false; // Variável para indicar se a contagem está em andamento
 
         public FPrincipal()
@@ -19,12 +21,14 @@ namespace ClicksAndKeysCounter
                 counting = true;
                 btnToggle.Text = "Parar";
                 MouseHook.Start(); // Inicia o monitoramento de cliques
+                KeyboardHook.Start(); // Inicia o monitoramento de teclas
             }
             else
             {
                 counting = false;
                 btnToggle.Text = "Iniciar";
                 MouseHook.Stop(); // Para o monitoramento de cliques
+                KeyboardHook.Stop(); // Para o monitoramento de cliques
             }
         }
 
@@ -81,6 +85,21 @@ namespace ClicksAndKeysCounter
             }
         }
 
+        private void KeyboardHook_KeyDown(object sender, EventArgs e)
+        {
+            if (counting)
+            {
+                keyPressCount++;
+                UpdatKeyCountLabel();
+            }
+        }
+
+        private void UpdatKeyCountLabel()
+        {
+            lbKeyPressCount.Text = $"Keys Pressed: {keyPressCount}";
+            RegistraLog.LogDetalhado($"Keys Pressed: {keyPressCount}");
+        }
+
         private void FPrincipal_Load(object sender, EventArgs e)
         {
             leftButtonClickCount = RegistraLog.GetLastCountLeftClicks();
@@ -89,6 +108,8 @@ namespace ClicksAndKeysCounter
             MouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
             MouseHook.RightButtonDown += MouseHook_RightButtonDown;
             MouseHook.PositionButtonDown += MouseHook_PositionButtonDown;
+
+            KeyboardHook.KeyDown += KeyboardHook_KeyDown;
 
             btnToggle_Click(null, null); // Inicia a contagem ao carregar o formulário (opcional)
         }
