@@ -16,24 +16,17 @@ namespace ClicksAndKeysCounter
             InitializeComponent();
         }
 
-        private void btnToggle_Click(object sender, EventArgs e)
-        {
-            ChangeCounting();
-        }
-
         private void ChangeCounting()
         {
             if (counting)
             {
                 counting = false;
-                btnToggle.Text = "Start";
                 MouseHook.Stop(); // Para o monitoramento de cliques
                 KeyboardHook.Stop(); // Para o monitoramento de cliques
             }
             else
             {
                 counting = true;
-                btnToggle.Text = "Stop";
                 MouseHook.Start(); // Inicia o monitoramento de cliques
                 KeyboardHook.Start(); // Inicia o monitoramento de teclas
             }
@@ -148,6 +141,7 @@ namespace ClicksAndKeysCounter
 
             //the status create false, now change to true to start the counting
             ChangeCounting();
+            UpdatePictureBox();
         }
 
         private void FPrincipal_FormClosing(object sender, FormClosingEventArgs e)
@@ -161,6 +155,15 @@ namespace ClicksAndKeysCounter
             {
                 Hide(); // Esconde o formulário quando é minimizado
             }
+            else
+            {
+                UpdatePictureBox();
+            }
+        }
+
+        private void UpdatePictureBox()
+        {
+            pictureBoxMapClicks.Image = SaveImage.GetImage();
         }
 
         private void NotifyIconMain_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -168,6 +171,8 @@ namespace ClicksAndKeysCounter
             Show(); // Exibe o formulário quando o ícone na bandeja é clicado duas vezes
             WindowState = FormWindowState.Normal;
         }
+
+
 
     }
 }

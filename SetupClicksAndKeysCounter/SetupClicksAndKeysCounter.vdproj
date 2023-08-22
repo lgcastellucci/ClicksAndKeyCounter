@@ -221,7 +221,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SetupClicksAndKeysCounter"
         "ProductCode" = "8:{EDD3083B-BC41-4BBF-80AA-19B5440A0353}"
-        "PackageCode" = "8:{CFAFCEE6-B31C-44F9-B326-ED58B2F4AA8F}"
+        "PackageCode" = "8:{BDE15D15-26E8-4F41-A132-94FD27687A59}"
         "UpgradeCode" = "8:{D96120F7-2F87-4217-ACA8-04C16519BA77}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -341,9 +341,23 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C739A297C1F742CA9A7E51D12A2E5CA9"
+            {
+            "Name" = "8:ClicksAndKeysCounter"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_983C0ACC3280460896DC4BCAC7F9F976"
+            "Folder" = "8:_A2DAFA0C099F407C9519C44B587EC52B"
+            "WorkingFolder" = "8:_422D45A798C542EA86158052173BD1A7"
+            "Icon" = "8:_4FA2534D0BD14D428B5FB04319D99630"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D9497765ACC14792BA631CDC60250745"
             {
-            "Name" = "8:Shortcut to Publicar Itens from ClicksAndKeysCounter (Active)"
+            "Name" = "8:ClicksAndKeysCounter"
             "Arguments" = "8:"
             "Description" = "8:ClicksAndKeysCounter"
             "ShowCmd" = "3:1"

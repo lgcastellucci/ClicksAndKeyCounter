@@ -53,7 +53,16 @@ namespace ClicksAndKeysCounter
 
             File.Delete(imageFilePath);
             File.Move(ImageNewFilePath, imageFilePath);
+        }
 
+        public static Bitmap GetImage()
+        {
+            string imageFilePath = Path.Combine(GetDirectoryPath(), GetFileName());
+
+            if (File.Exists(imageFilePath))
+                return new Bitmap(imageFilePath);
+            else
+                return CreateEmptyBitmap(Color.White, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height);
         }
 
     }
