@@ -1,4 +1,6 @@
 # ClicksAndKeysCounter
+Select Language: **English**, [Portuguese](https://github.com/AnisanWesley/anisan-college/blob/master/Anisoket/README-pt.md)
+
 **ClicksAndKeys Counter - Mouse and Keyboard Activity Monitor**
 
 The ClicksAndKeys Counter is an intuitive tool for monitoring mouse and keyboard activities, designed to track and record the number of mouse clicks and key presses throughout the day. With a user-friendly interface and powerful features, this software provides a detailed overview of your computer interaction, offering valuable insights into your productivity and usage habits.
