@@ -1,5 +1,5 @@
 # ClicksAndKeysCounter
-Select Language: **English**, [Portuguese](https://github.com/AnisanWesley/anisan-college/blob/master/Anisoket/README-pt.md)
+Select Language: **English**, [Portuguese](https://github.com/lgcastellucci/ClicksAndKeysCounter/blob/main/README-pt.md)
 
 **ClicksAndKeys Counter - Mouse and Keyboard Activity Monitor**
 
