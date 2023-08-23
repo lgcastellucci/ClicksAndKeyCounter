@@ -36,6 +36,7 @@
             lbKeyPressCount = new Label();
             pictureBoxMapClicks = new PictureBox();
             label1 = new Label();
+            dateTimePicker1 = new DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMapClicks).BeginInit();
             SuspendLayout();
             // 
@@ -94,11 +95,22 @@
             label1.TabIndex = 5;
             label1.Text = "Map of Clicks";
             // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Format = DateTimePickerFormat.Short;
+            dateTimePicker1.Location = new Point(97, 72);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(95, 23);
+            dateTimePicker1.TabIndex = 6;
+            dateTimePicker1.Visible = false;
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            // 
             // FPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(723, 449);
+            Controls.Add(dateTimePicker1);
             Controls.Add(label1);
             Controls.Add(pictureBoxMapClicks);
             Controls.Add(lbKeyPressCount);
@@ -125,5 +137,6 @@
         private Label lbKeyPressCount;
         private PictureBox pictureBoxMapClicks;
         private Label label1;
+        private DateTimePicker dateTimePicker1;
     }
 }

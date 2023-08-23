@@ -4,6 +4,8 @@ namespace ClicksAndKeysCounter
 {
     internal class SaveImage
     {
+        static string identificationFileName = "mouse_click_positions";
+
         private static string GetDirectoryPath()
         {
             string path = Path.Combine(AppContext.BaseDirectory, "images");
@@ -13,31 +15,43 @@ namespace ClicksAndKeysCounter
 
             return path;
         }
+
         private static string GetFileName()
         {
-            return "mouse_click_positions" + DateTime.Now.ToString("yyyyMMdd") + ".png";
+            return identificationFileName + DateTime.Now.ToString("yyyyMMdd") + ".png";
+        }
+
+        private static string GetFilePath()
+        {
+            return Path.Combine(GetDirectoryPath(), GetFileName());
         }
 
         private static Bitmap CreateEmptyBitmap(Color c, int width, int height)
         {
             var bmp = new Bitmap(width, height);
-            using (var g = Graphics.FromImage(bmp))
-            {
-                g.Clear(c);
-            }
+            var g = Graphics.FromImage(bmp);
+            g.Clear(c);
             return bmp;
+        }
+
+        private static Bitmap CreateEmptyBitmapWhiteScreenLength()
+        {
+            return CreateEmptyBitmap(Color.White, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height);
         }
 
         public static void UpdateImage(int x, int y)
         {
-            string imageFilePath = Path.Combine(GetDirectoryPath(), GetFileName());
-            string ImageNewFilePath = Path.Combine(GetDirectoryPath(), "temp.png");
+            string imageFilePath = GetFilePath();
+            string imageNewFilePath = Path.Combine(GetDirectoryPath(), "temp.png");
 
             Bitmap image;
             if (File.Exists(imageFilePath))
-                image = new Bitmap(imageFilePath);
+            {
+                File.Move(imageFilePath, imageNewFilePath, true);
+                image = new Bitmap(imageNewFilePath);
+            }
             else
-                image = CreateEmptyBitmap(Color.White, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height);
+                image = CreateEmptyBitmapWhiteScreenLength();
 
             var graphics = Graphics.FromImage(image);
 
@@ -46,24 +60,29 @@ namespace ClicksAndKeysCounter
             graphics.FillEllipse(Brushes.Black, x - circleRadius, y - circleRadius, 2 * circleRadius, 2 * circleRadius);
 
             // Salva a imagem em um arquivo
-            image.Save(ImageNewFilePath, ImageFormat.Png);
+            image.Save(imageFilePath, ImageFormat.Png);
 
             graphics.Dispose();
             image.Dispose();
 
-            File.Delete(imageFilePath);
-            File.Move(ImageNewFilePath, imageFilePath);
+            File.Delete(imageNewFilePath);
         }
 
-        public static Bitmap GetImage()
+        public static Bitmap GetImage(DateTime dateTime)
         {
-            string imageFilePath = Path.Combine(GetDirectoryPath(), GetFileName());
+            string imageFilePath = Path.Combine(GetDirectoryPath(), identificationFileName + dateTime.ToString("yyyyMMdd") + ".png");
+            string imageViewFilePath = Path.Combine(GetDirectoryPath(), "tempView.png");
 
             if (File.Exists(imageFilePath))
-                return new Bitmap(imageFilePath);
-            else
-                return CreateEmptyBitmap(Color.White, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height);
-        }
+            {
+                File.Copy(imageFilePath, imageViewFilePath, true);
+                var image = new Bitmap(imageViewFilePath);
+                var newImage = new Bitmap(image);
+                image.Dispose();
 
+                return newImage;
+            }
+            return CreateEmptyBitmapWhiteScreenLength();
+        }
     }
 }

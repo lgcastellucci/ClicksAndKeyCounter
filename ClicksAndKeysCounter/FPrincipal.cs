@@ -163,7 +163,16 @@ namespace ClicksAndKeysCounter
 
         private void UpdatePictureBox()
         {
-            pictureBoxMapClicks.Image = SaveImage.GetImage();
+            DateTime dateTime = dateTimePicker1.Value;
+            try
+            {
+                dateTime = dateTimePicker1.Value.Date;
+            }
+            catch
+            {
+            }
+
+            pictureBoxMapClicks.Image = SaveImage.GetImage(dateTime);
         }
 
         private void NotifyIconMain_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -172,7 +181,9 @@ namespace ClicksAndKeysCounter
             WindowState = FormWindowState.Normal;
         }
 
-
-
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            UpdatePictureBox();
+        }
     }
 }
