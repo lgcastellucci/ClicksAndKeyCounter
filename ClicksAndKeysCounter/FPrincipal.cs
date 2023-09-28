@@ -185,5 +185,47 @@ namespace ClicksAndKeysCounter
         {
             UpdatePictureBox();
         }
+
+        private void chkMoveMouse_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkMoveMouse.Checked)
+            {
+                timerMoveMouse.Enabled = true;
+                timerMoveMouse.Start();
+            }
+            else
+            {
+                timerMoveMouse.Enabled = false;
+                timerMoveMouse.Stop();
+            }
+        }
+
+        private void MouseMoveRandom()
+        {
+            var random = new Random();
+
+            // Obter a resolução da tela para garantir que as coordenadas estejam dentro dos limites
+            int screenWidth = SystemInformation.PrimaryMonitorSize.Width;
+            int screenHeight = SystemInformation.PrimaryMonitorSize.Height;
+
+            // Gerar coordenadas aleatórias
+            int x = random.Next(screenWidth);
+            int y = random.Next(screenHeight);
+
+            // Mover o cursor para as coordenadas aleatórias
+            Cursor.Position = new Point(x, y);
+        }
+
+        private void timerMoveMouse_Tick(object sender, EventArgs e)
+        {
+            if (TimeMoveMouse.Value > 0)
+            {
+                TimeMoveMouse.Value--;
+                if (TimeMoveMouse.Value == 0)
+                    chkMoveMouse.Checked = false;
+
+                MouseMoveRandom();
+            }
+        }
     }
 }

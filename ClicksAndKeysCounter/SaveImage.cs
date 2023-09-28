@@ -84,5 +84,6 @@ namespace ClicksAndKeysCounter
             }
             return CreateEmptyBitmapWhiteScreenLength();
         }
+
     }
 }

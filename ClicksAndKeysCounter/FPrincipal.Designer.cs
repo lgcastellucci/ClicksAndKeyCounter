@@ -37,7 +37,13 @@
             pictureBoxMapClicks = new PictureBox();
             label1 = new Label();
             dateTimePicker1 = new DateTimePicker();
+            groupBox1 = new GroupBox();
+            TimeMoveMouse = new NumericUpDown();
+            chkMoveMouse = new CheckBox();
+            timerMoveMouse = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBoxMapClicks).BeginInit();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)TimeMoveMouse).BeginInit();
             SuspendLayout();
             // 
             // lbLeftClickCount
@@ -105,11 +111,46 @@
             dateTimePicker1.Visible = false;
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(TimeMoveMouse);
+            groupBox1.Controls.Add(chkMoveMouse);
+            groupBox1.Location = new Point(505, 31);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(203, 64);
+            groupBox1.TabIndex = 9;
+            groupBox1.TabStop = false;
+            // 
+            // TimeMoveMouse
+            // 
+            TimeMoveMouse.Location = new Point(126, 26);
+            TimeMoveMouse.Name = "TimeMoveMouse";
+            TimeMoveMouse.Size = new Size(62, 23);
+            TimeMoveMouse.TabIndex = 10;
+            TimeMoveMouse.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            // 
+            // chkMoveMouse
+            // 
+            chkMoveMouse.AutoSize = true;
+            chkMoveMouse.Location = new Point(6, 12);
+            chkMoveMouse.Name = "chkMoveMouse";
+            chkMoveMouse.Size = new Size(98, 49);
+            chkMoveMouse.TabIndex = 9;
+            chkMoveMouse.Text = "Move mouse \r\nrandomly \r\nfor X minutes";
+            chkMoveMouse.UseVisualStyleBackColor = true;
+            chkMoveMouse.CheckedChanged += chkMoveMouse_CheckedChanged;
+            // 
+            // timerMoveMouse
+            // 
+            timerMoveMouse.Interval = 60000;
+            timerMoveMouse.Tick += timerMoveMouse_Tick;
+            // 
             // FPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(723, 449);
+            Controls.Add(groupBox1);
             Controls.Add(dateTimePicker1);
             Controls.Add(label1);
             Controls.Add(pictureBoxMapClicks);
@@ -126,6 +167,9 @@
             Load += FPrincipal_Load;
             Resize += FPrincipal_Resize;
             ((System.ComponentModel.ISupportInitialize)pictureBoxMapClicks).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)TimeMoveMouse).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -138,5 +182,9 @@
         private PictureBox pictureBoxMapClicks;
         private Label label1;
         private DateTimePicker dateTimePicker1;
+        private GroupBox groupBox1;
+        private NumericUpDown TimeMoveMouse;
+        private CheckBox chkMoveMouse;
+        private System.Windows.Forms.Timer timerMoveMouse;
     }
 }
