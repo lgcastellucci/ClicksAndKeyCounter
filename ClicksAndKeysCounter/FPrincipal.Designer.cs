@@ -108,7 +108,6 @@
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(95, 23);
             dateTimePicker1.TabIndex = 6;
-            dateTimePicker1.Visible = false;
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // groupBox1
