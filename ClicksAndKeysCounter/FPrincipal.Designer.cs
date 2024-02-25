@@ -85,7 +85,7 @@
             // 
             // pictureBoxMapClicks
             // 
-            pictureBoxMapClicks.Location = new Point(12, 98);
+            pictureBoxMapClicks.Location = new Point(12, 73);
             pictureBoxMapClicks.Name = "pictureBoxMapClicks";
             pictureBoxMapClicks.Size = new Size(696, 339);
             pictureBoxMapClicks.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -95,7 +95,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 80);
+            label1.Location = new Point(16, 52);
             label1.Name = "label1";
             label1.Size = new Size(79, 15);
             label1.TabIndex = 5;
@@ -104,7 +104,7 @@
             // dateTimePicker1
             // 
             dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(97, 72);
+            dateTimePicker1.Location = new Point(101, 44);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(95, 23);
             dateTimePicker1.TabIndex = 6;
@@ -114,15 +114,15 @@
             // 
             groupBox1.Controls.Add(TimeMoveMouse);
             groupBox1.Controls.Add(chkMoveMouse);
-            groupBox1.Location = new Point(505, 31);
+            groupBox1.Location = new Point(378, 31);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(203, 64);
+            groupBox1.Size = new Size(330, 36);
             groupBox1.TabIndex = 9;
             groupBox1.TabStop = false;
             // 
             // TimeMoveMouse
             // 
-            TimeMoveMouse.Location = new Point(126, 26);
+            TimeMoveMouse.Location = new Point(246, 11);
             TimeMoveMouse.Name = "TimeMoveMouse";
             TimeMoveMouse.Size = new Size(62, 23);
             TimeMoveMouse.TabIndex = 10;
@@ -133,9 +133,9 @@
             chkMoveMouse.AutoSize = true;
             chkMoveMouse.Location = new Point(6, 12);
             chkMoveMouse.Name = "chkMoveMouse";
-            chkMoveMouse.Size = new Size(98, 49);
+            chkMoveMouse.Size = new Size(223, 19);
             chkMoveMouse.TabIndex = 9;
-            chkMoveMouse.Text = "Move mouse \r\nrandomly \r\nfor X minutes";
+            chkMoveMouse.Text = "Move mouse randomly for X minutes";
             chkMoveMouse.UseVisualStyleBackColor = true;
             chkMoveMouse.CheckedChanged += chkMoveMouse_CheckedChanged;
             // 
@@ -148,7 +148,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(723, 449);
+            ClientSize = new Size(723, 426);
             Controls.Add(groupBox1);
             Controls.Add(dateTimePicker1);
             Controls.Add(label1);
